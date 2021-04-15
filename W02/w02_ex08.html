@@ -4,10 +4,12 @@
   </head>
   <body>
     <input type="button"
-	   onclick="e()"
-	   value="Click Me"/>
+    value="Click Me"
+    id="click_me">
     <script>
-      function e(){ window.alert('Clicked!'); }
+      var element = document.getElementById('click_me');
+      element.addEventListener('click', e);
+      function e() {window.alert('Clicked!');}
     </script>
   </body>
 </html>
