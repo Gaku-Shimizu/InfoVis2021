@@ -15,6 +15,11 @@ class Vec3
 	    return this;
     }
 
+    distance(v)
+    {
+        return Math.sqrt(Math.pow((this.x-v.x),2) + Math.pow((this.y-v.y),2) + Math.pow((this.z-v.z),2));
+    }
+
     sum()
     {
 	    return this.x + this.y + this.z;
@@ -22,7 +27,7 @@ class Vec3
 
     min()
     {
-        min = this.x;
+        var min = this.x;
         if(min > this.y){
             min = this.y;
         }
@@ -34,7 +39,7 @@ class Vec3
 
     max()
     {
-        max = this.x;
+        var max = this.x;
         if(max < this.y){
             max = this.y;
         }
