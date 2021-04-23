@@ -1,6 +1,6 @@
-label,width
-A,20
-B,50
-C,80
-D,30
-E,70
+label,width,color
+A,20,red
+B,50,blue
+C,80,green
+D,30,yellow
+E,70,magenta
