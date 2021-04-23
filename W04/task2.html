@@ -8,7 +8,7 @@
             var padding = 10;
             var height = 20;
             var textLength = 15;
-            var svg = d3.select("body").append("svg");
+            var svg = d3.select("body").append("svg").attr("width", 500).attr("height", 500);
             d3.csv("https://gaku-shimizu.github.io/InfoVis2021/W04/w04_task2.csv", draw );
             function draw(data){
                 svg.selectAll("text")
@@ -18,7 +18,7 @@
                 .attr("x", padding)
                 .attr("y", function(d,i){return padding + i * (height + padding) + textLength;})
                 .text(function(d){ return d.label;})
-                .attr("textLength", 15);
+                .attr("textLength", textLength);
                 svg.selectAll("rect")
                 .data(data)
                 .enter()
@@ -26,7 +26,8 @@
                 .attr("x", padding + textLength*2)
                 .attr("y", function(d,i){return padding + i * (height + padding);})
                 .attr("width", function(d){ return d.width; })
-                .attr("height", height);
+                .attr("height", height)
+                .style("fill", function(d){ return d.color; });
             }
 		</script>
     </body>
