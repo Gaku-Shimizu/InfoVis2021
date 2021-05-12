@@ -4,9 +4,9 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/W08/w08_task.csv")
 
         var config = {
             parent: '#drawing_region',
-            width: 512,
+            width: 256,
             height: 256,
-            margin: {top:25, right:10, bottom:50, left:80},
+            margin: {top:25, right:10, bottom:10, left:10},
             title: 'Pie Chart',
             xlabel: 'Value',
             ylabel: 'Label'
