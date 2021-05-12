@@ -1,4 +1,4 @@
-class LineChart {
+class PieChart {
 
     constructor( config, data ) {
         this.config = {
@@ -30,18 +30,16 @@ class LineChart {
         self.xscale = d3.scaleLinear()
             .range( [0, self.inner_width] );
 
-        self.yscale = d3.scaleLinear()
-            .range( [0, self.inner_height] );
+        self.yscale = d3.scaleBand()
+            .range( [0, self.inner_height] )
+            .paddingInner(0.1);
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(3)
-            .tickSize(5)
-            .tickPadding(5);
+            .ticks(5)
+            .tickSizeOuter(0);
 
         self.yaxis = d3.axisLeft( self.yscale )
-            .ticks(3)
-            .tickSize(5)
-            .tickSizeOuter(5);
+            .tickSizeOuter(0);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${self.inner_height})`);
@@ -63,7 +61,7 @@ class LineChart {
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .text( self.config.xlabel );
 
-        const ylabel_space = 50;
+        const ylabel_space = 80;
         self.svg.append('text')
             .attr('transform', `rotate(-90)`)
             .attr('y', self.config.margin.left - ylabel_space)
@@ -76,28 +74,25 @@ class LineChart {
     update() {
         let self = this;
 
-        const space = 10;
+        const max = d3.max( self.data, d => d.value );
+        self.xscale.domain( [0, max] );
 
-        const xmax = d3.max( self.data, d => d.x );
-        self.xscale.domain( [0, xmax] );
+        self.yscale.domain( self.data.map(d => d.label) );
 
-        const ymax = d3.max( self.data, d => d.y );
-        self.yscale.domain( [0, ymax] );
-
-        self.render();    }
+        self.render();
+    }
 
     render() {
         let self = this;
 
-        const area = d3.area()
-            .x( d => self.xscale( d.x ))
-            .y1( d => self.yscale( d.y ))
-            .y0( d3.max(self.data, d => self.yscale( d.y )));
-
-        self.chart.append('path')
-            .attr('d', area(self.data))
-            .attr('stroke', 'black')
-            .attr('fill', 'gray');
+        self.chart.selectAll("rect")
+            .data(self.data)
+            .enter()
+            .append("rect")
+            .attr("x", 0 )
+            .attr("y", d => self.yscale( d.label ) )
+            .attr("width", d => self.xscale(d.value) )
+            .attr("height", self.yscale.bandwidth());
 
         self.xaxis_group
             .call( self.xaxis );
