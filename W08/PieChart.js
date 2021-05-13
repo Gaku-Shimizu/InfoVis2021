@@ -22,7 +22,7 @@ class PieChart {
             .attr('height', self.config.height);
 
         self.chart = self.svg.append('g')
-            .attr('transform', `translate(${self.config.width/2}, ${(self.config.height/2)})`);
+            .attr('transform', `translate(${self.config.width/2}, ${(self.config.height-self.config.margin.top)/2 + self.config.margin.top})`);
 
         self.inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
         self.inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
@@ -43,15 +43,20 @@ class PieChart {
     update() {
         let self = this;
 
+        const colors = [];
+        self.data.forEach(d => {colors.push(d.color);});
+        self.color = d3.scaleOrdinal()
+            .range(colors);
+
+        self.arc = d3.arc()
+            .innerRadius(self.iradius)
+            .outerRadius(self.radius);
         
         self.render();
     }
 
     render() {
         let self = this;
-
-        const color = d3.scaleOrdinal()
-            .range(["red", "yellow", "burlywood", "brown", "orange"]);
 
         const pie = d3.pie()
             .value( d => d.value );
@@ -62,14 +67,16 @@ class PieChart {
             .append("g")
             .attr("class", "pie");
 
-        const arc = d3.arc()
-            .innerRadius(self.iradius)
-            .outerRadius(self.radius);
-
         pieGroup.append("path")
-            .attr("d", arc )
-            .attr("fill", d => color(d.index))
+            .attr("d", self.arc )
+            .attr("fill", d => self.color(d.index))
             .attr("stroke", "white" )
             .style("stroke-width", "2px");
+        
+        pieGroup.append("text")
+            .attr("fill", "black")
+            .attr("transform", d => "translate(" + this.arc.centroid(d) + ")")
+            .attr("text-anchor", "middle")
+            .text(d => d.data.label);
     }
 }

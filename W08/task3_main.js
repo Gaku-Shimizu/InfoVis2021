@@ -6,7 +6,7 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/W08/w08_task.csv")
             parent: '#drawing_region',
             width: 256,
             height: 256,
-            margin: {top:25, right:10, bottom:10, left:10},
+            margin: {top:25, right:0, bottom:0, left:0},
             title: 'Pie Chart',
             xlabel: 'Value',
             ylabel: 'Label'
