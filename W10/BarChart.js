@@ -58,6 +58,7 @@ class BarChart {
         self.svg.append('text')
             .attr('x', self.config.width / 2)
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
+            .attr('text-anchor', 'middle')
             .text( self.config.xlabel );
 
         const ylabel_space = 80;
