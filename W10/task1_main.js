@@ -1,7 +1,7 @@
 var data;
 var bar_chart;
 
-d3.csv("https://gaku-shimizu.github.io/InfoVis2021/W08/w08_task.csv")
+d3.csv("https://gaku-shimizu.github.io/InfoVis2021/W10/gdp2020.csv")
     .then( data => {
         data.forEach( d => { d.value = +d.value;});
         this.data = data;
