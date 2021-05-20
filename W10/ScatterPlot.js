@@ -34,12 +34,12 @@ class ScatterPlot {
             .range([0, self.inner_height]);
 
         self.xaxis = d3.axisBottom(self.xscale)
-            .ticks(3)
+            .ticks(5)
             .tickSize(5)
             .tickPadding(5);
 
         self.yaxis = d3.axisLeft(self.yscale)
-            .ticks(3)
+            .ticks(5)
             .tickSize(5)
             .tickPadding(5);
 
@@ -61,9 +61,10 @@ class ScatterPlot {
         self.svg.append('text')
             .attr('x', self.config.width / 2)
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
+            .attr('text-anchor', 'middle')
             .text(self.config.xlabel);
 
-        const ylabel_space = 50;
+        const ylabel_space = 80;
         self.svg.append('text')
             .attr('transform', `rotate(-90)`)
             .attr('y', self.config.margin.left - ylabel_space)
@@ -73,17 +74,27 @@ class ScatterPlot {
             .text(self.config.ylabel);
     }
 
-    update() {
+    update(small_x, small_y) {
         let self = this;
 
         const space = 10;
         const xmin = d3.min(self.data, d => d.x) - space;
         const xmax = d3.max(self.data, d => d.x) + space;
-        self.xscale.domain([xmin, xmax]);
+        if(small_x > 0){
+            self.xscale.domain([xmin, small_x]);
+        }
+        else{
+            self.xscale.domain([xmin, xmax]);
+        }
 
         const ymin = d3.min(self.data, d => d.y) - space;
         const ymax = d3.max(self.data, d => d.y) + space;
-        self.yscale.domain([ymax, ymin]);
+        if(small_y > 0){
+            self.yscale.domain([small_y, ymin]);
+        }
+        else{
+            self.yscale.domain([ymax, ymin]);
+        }
 
         self.render();
     }
@@ -91,21 +102,21 @@ class ScatterPlot {
     render() {
         let self = this;
 
-        let circles = self.chart.selectAll("circle")
+        self.circles = self.chart.selectAll("circle")
             .data(self.data)
-            .enter()
-            .append("circle");
+            .join("circle")
 
-        circles
+        self.circles
+            .transition().duration(1000)
             .attr("cx", d => self.xscale(d.x))
             .attr("cy", d => self.yscale(d.y))
             .attr("r", d => d.r);
-        
-        circles
-            .on('mouseover', (e,d) => {
+
+        self.circles
+            .on('mouseover', (e, d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
+                    .html(`<div class="tooltip-label">${d.label}</div>GDP:${d.x}<br>Population:${d.y}`);
             })
             .on('mousemove', e => {
                 const padding = 10;
@@ -117,12 +128,14 @@ class ScatterPlot {
                 d3.select('#tooltip')
                     .style('opacity', 0);
             });
-        
+
 
         self.xaxis_group
+            .transition().duration(1000)
             .call(self.xaxis);
 
         self.yaxis_group
+            .transition().duration(1000)
             .call(self.yaxis);
     }
 }
