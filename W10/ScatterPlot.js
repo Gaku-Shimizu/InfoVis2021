@@ -102,7 +102,7 @@ class ScatterPlot {
             .attr("r", d => d.r);
         
         circles
-            .on('mouseover', d => {
+            .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
                     .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
