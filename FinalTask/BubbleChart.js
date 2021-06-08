@@ -1,4 +1,4 @@
-class ScatterPlot {
+class BubbleChart {
 
     constructor( config, data ) {
         this.config = {
