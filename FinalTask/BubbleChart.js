@@ -70,9 +70,9 @@ class BubbleChart {
     update() {
         let self = this;
 
-        self.cvalue = d => d.species;
-        self.xvalue = d => d.sepal_length;
-        self.yvalue = d => d.sepal_width;
+        self.cvalue = d => d.region;
+        self.xvalue = d => d.population;
+        self.yvalue = d => d.bed;
 
         const xmin = d3.min( self.data, self.xvalue );
         const xmax = d3.max( self.data, self.xvalue );
@@ -92,7 +92,6 @@ class BubbleChart {
             .data(self.data)
             .join('circle');
 
-        const circle_color = 'steelblue';
         const circle_radius = 3;
         circles
             .attr("r", circle_radius )
@@ -104,7 +103,7 @@ class BubbleChart {
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">${d.species}</div>(${d.sepal_length}, ${d.sepal_length})`);
+                    .html(`<div class="tooltip-label">${d.prefecture}</div>Population:${d.population}<br>Bed:${d.bed}<br>Infected:${d.infected}`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;

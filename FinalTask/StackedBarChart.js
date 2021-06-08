@@ -68,7 +68,7 @@ class StackedBarChart {
     update() {
         let self = this;
 
-        const data_map = d3.rollup( self.data, v => v.length, d => d.species );
+        const data_map = d3.rollup( self.data, v => v.length, d => d.region );
         self.aggregated_data = Array.from( data_map, ([key,count]) => ({key,count}) );
 
         self.cvalue = d => d.key;

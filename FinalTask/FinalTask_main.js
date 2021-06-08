@@ -17,8 +17,8 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
 
         bubble_chart = new BubbleChart( {
             parent: '#drawing_region_bubblechart',
-            width: 256,
-            height: 256,
+            width: 512,
+            height: 512,
             margin: {top:10, right:10, bottom:50, left:50},
             xlabel: 'Population',
             ylabel: 'Number of Beds',
@@ -28,11 +28,11 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
 
         stacked_bar_chart = new StackedBarChart( {
             parent: '#drawing_region_stackedbarchart',
-            width: 256,
-            height: 256,
+            width: 512,
+            height: 512,
             margin: {top:10, right:10, bottom:50, left:50},
             xlabel: 'Region',
-            ylabel: 'Number of Infected',
+            ylabel: 'Number of Infected People',
             cscale: color_scale
         }, input_data );
         stacked_bar_chart.update();
