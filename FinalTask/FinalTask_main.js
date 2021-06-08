@@ -7,12 +7,12 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
     .then( data => {
         input_data = data;
         input_data.forEach( d => {
-            d.sepal_length = +d.sepal_length;
-            d.sepal_width = +d.sepal_width;
+            d.population = +d.population;
+            d.bed = +d.bed;
         });
 
         const color_scale = d3.scaleOrdinal( d3.schemeCategory10 );
-        color_scale.domain(['setosa','versicolor','virginica']);
+        color_scale.domain(['Hokkaido/Tohoku','Kantou','Chubu','Kinki','Chugoku','Shikoku','Kyusyu/Okinawa']);
 
         scatter_plot = new ScatterPlot( {
             parent: '#drawing_region_scatterplot',
