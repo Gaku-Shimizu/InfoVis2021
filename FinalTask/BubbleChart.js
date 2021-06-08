@@ -31,7 +31,7 @@ class BubbleChart {
             .range( [0, self.inner_width] );
 
         self.yscale = d3.scaleLinear()
-            .range( [self.inner_height, 0] );
+            .range( [0, self.inner_height] );
 
         self.xaxis = d3.axisBottom( self.xscale )
             .ticks(3)
@@ -73,6 +73,7 @@ class BubbleChart {
         self.cvalue = d => d.region;
         self.xvalue = d => d.population;
         self.yvalue = d => d.bed;
+        self.rvalue = d => d.infected/1000;
 
         const xmin = d3.min( self.data, self.xvalue );
         const xmax = d3.max( self.data, self.xvalue );
@@ -92,12 +93,12 @@ class BubbleChart {
             .data(self.data)
             .join('circle');
 
-        const circle_radius = 3;
         circles
-            .attr("r", circle_radius )
+            .attr("r", d => self.rvalue(d) )
             .attr("cx", d => self.xscale( self.xvalue(d) ) )
             .attr("cy", d => self.yscale( self.yvalue(d) ) )
             .attr("fill", d => self.config.cscale( self.cvalue(d) ) );
+            .style("opacity", 0.5);
 
         circles
             .on('mouseover', (e,d) => {

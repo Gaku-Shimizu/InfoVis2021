@@ -10,7 +10,6 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
             d.population = +d.population;
             d.bed = +d.bed;
             d.infected = +d.infected;
-            console.log(d);
         });
 
         const color_scale = d3.scaleOrdinal( d3.schemeCategory10 );
