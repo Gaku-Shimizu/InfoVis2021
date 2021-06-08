@@ -97,7 +97,7 @@ class BubbleChart {
             .attr("r", d => self.rvalue(d) )
             .attr("cx", d => self.xscale( self.xvalue(d) ) )
             .attr("cy", d => self.yscale( self.yvalue(d) ) )
-            .attr("fill", d => self.config.cscale( self.cvalue(d) ) );
+            .attr("fill", d => self.config.cscale( self.cvalue(d) ) )
             .style("opacity", 0.5);
 
         circles
