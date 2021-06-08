@@ -50,7 +50,7 @@ class BubbleChart {
 
         const xlabel_space = 40;
         self.svg.append('text')
-            .style('font-size', '12px')
+            .style('font-size', '18px')
             .attr('x', self.config.margin.left + self.inner_width / 2)
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .attr('text-anchor', 'middle')
@@ -58,7 +58,7 @@ class BubbleChart {
 
         const ylabel_space = 45;
         self.svg.append('text')
-            .style('font-size', '12px')
+            .style('font-size', '18px')
             .attr('transform', `rotate(-90)`)
             .attr('y', self.config.margin.left - ylabel_space)
             .attr('x', -self.config.margin.top - self.inner_height / 2)

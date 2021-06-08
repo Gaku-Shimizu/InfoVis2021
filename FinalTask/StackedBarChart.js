@@ -49,14 +49,14 @@ class StackedBarChart {
 
         const xlabel_space = 40;
         self.svg.append('text')
-            .style('font-size', '12px')
+            .style('font-size', '18px')
             .attr('x', self.config.width / 2)
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .text( self.config.xlabel );
 
         const ylabel_space = 50;
         self.svg.append('text')
-            .style('font-size', '12px')
+            .style('font-size', '18px')
             .attr('transform', `rotate(-90)`)
             .attr('y', self.config.margin.left - ylabel_space)
             .attr('x', -(self.config.height / 2))
@@ -68,12 +68,17 @@ class StackedBarChart {
     update() {
         let self = this;
 
-        const data_map = d3.rollup( self.data, v => v.length, d => d.region );
-        self.aggregated_data = Array.from( data_map, ([key,count]) => ({key,count}) );
+        const data_map = d3.nest()
+            .key(function(d){ return d.region; })
+            .rollup(function(v){ return d3.sum(v, function(d){ return d.infected;});})
+            .entries(self.data);
+        console.log(data_map);
+        self.aggregated_data = Array.from( data_map);
+        console.log(self.aggregated_data);
 
         self.cvalue = d => d.key;
         self.xvalue = d => d.key;
-        self.yvalue = d => d.count;
+        self.yvalue = d => d.value;
 
         const items = self.aggregated_data.map( self.xvalue );
         self.xscale.domain(items);
