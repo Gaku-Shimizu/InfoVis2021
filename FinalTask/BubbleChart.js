@@ -132,9 +132,11 @@ class BubbleChart {
             .x(d => self.xscale(d.x))
             .y(d => self.yscale(d.y));
         
+        /*
         self.chart.append('path')
             .attr('d', line(self.l))
             .attr('stroke', 'black')
             .attr('fill', 'none');
+        */
     }
 }
