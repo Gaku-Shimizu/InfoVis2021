@@ -1,4 +1,4 @@
-class StackedBarChart {
+class BarChart {
     constructor (config, data) {
         this.config = {
             parent: config.parent,

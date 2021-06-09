@@ -1,6 +1,6 @@
 let input_data;
 let bubble_chart;
-let stacked_bar_chart;
+let bar_chart;
 let filter = [];
 
 d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
@@ -26,8 +26,8 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
         }, input_data );
         bubble_chart.update();
 
-        stacked_bar_chart = new StackedBarChart( {
-            parent: '#drawing_region_stackedbarchart',
+        bar_chart = new BarChart( {
+            parent: '#drawing_region_barchart',
             width: 512,
             height: 512,
             margin: {top:10, right:10, bottom:50, left:90},
@@ -35,7 +35,7 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
             ylabel: 'Number of Infected People',
             cscale: color_scale
         }, input_data );
-        stacked_bar_chart.update();
+        bar_chart.update();
     })
     .catch( error => {
         console.log( error );
