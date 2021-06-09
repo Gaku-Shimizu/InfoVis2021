@@ -54,7 +54,7 @@ class StackedBarChart {
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .text( self.config.xlabel );
 
-        const ylabel_space = 50;
+        const ylabel_space = 80;
         self.svg.append('text')
             .style('font-size', '18px')
             .attr('transform', `rotate(-90)`)
@@ -72,9 +72,7 @@ class StackedBarChart {
             .key(function(d){ return d.region; })
             .rollup(function(v){ return d3.sum(v, function(d){ return d.infected;});})
             .entries(self.data);
-        console.log(data_map);
-        self.aggregated_data = Array.from( data_map);
-        console.log(self.aggregated_data);
+        self.aggregated_data = Array.from(data_map);
 
         self.cvalue = d => d.key;
         self.xvalue = d => d.key;

@@ -19,7 +19,7 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
             parent: '#drawing_region_bubblechart',
             width: 512,
             height: 512,
-            margin: {top:10, right:10, bottom:50, left:50},
+            margin: {top:10, right:10, bottom:50, left:90},
             xlabel: 'Population',
             ylabel: 'Number of Beds',
             cscale: color_scale
@@ -30,7 +30,7 @@ d3.csv("https://gaku-shimizu.github.io/InfoVis2021/FinalTask/data_final.csv")
             parent: '#drawing_region_stackedbarchart',
             width: 512,
             height: 512,
-            margin: {top:10, right:10, bottom:50, left:50},
+            margin: {top:10, right:10, bottom:50, left:90},
             xlabel: 'Region',
             ylabel: 'Number of Infected People',
             cscale: color_scale

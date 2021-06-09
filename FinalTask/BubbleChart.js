@@ -56,7 +56,7 @@ class BubbleChart {
             .attr('text-anchor', 'middle')
             .text( self.config.xlabel );
 
-        const ylabel_space = 45;
+        const ylabel_space = 80;
         self.svg.append('text')
             .style('font-size', '18px')
             .attr('transform', `rotate(-90)`)
@@ -71,7 +71,7 @@ class BubbleChart {
         let self = this;
 
         self.cvalue = d => d.region;
-        self.xvalue = d => d.population;
+        self.xvalue = d => d.population*1000;
         self.yvalue = d => d.bed;
         self.rvalue = d => d.infected/1000;
 
@@ -82,6 +82,11 @@ class BubbleChart {
         const ymin = d3.min( self.data, self.yvalue );
         const ymax = d3.max( self.data, self.yvalue );
         self.yscale.domain( [ymax, ymin] );
+
+        this.l = [
+            {x:xmin, y:ymin},
+            {x:xmax, y:ymax}
+        ];
 
         self.render();
     }
@@ -104,7 +109,7 @@ class BubbleChart {
             .on('mouseover', (e,d) => {
                 d3.select('#tooltip')
                     .style('opacity', 1)
-                    .html(`<div class="tooltip-label">${d.prefecture}</div>Population:${d.population}<br>Bed:${d.bed}<br>Infected:${d.infected}`);
+                    .html(`<div class="tooltip-label">${d.prefecture}</div>Population:${d.population*1000}<br>Bed:${d.bed}<br>Infected:${d.infected}`);
             })
             .on('mousemove', (e) => {
                 const padding = 10;
@@ -122,5 +127,14 @@ class BubbleChart {
 
         self.yaxis_group
             .call( self.yaxis );
+        
+        const line = d3.line()
+            .x(d => self.xscale(d.x))
+            .y(d => self.yscale(d.y));
+        
+        self.chart.append('path')
+            .attr('d', line(self.l))
+            .attr('stroke', 'black')
+            .attr('fill', 'none');
     }
 }
